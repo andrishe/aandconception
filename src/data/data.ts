@@ -1,6 +1,6 @@
 export const navbarLinks = [
   { label: 'Accueil', href: '/' },
-  { label: 'A propos', href: '#a-propos' },
-  { label: 'Services', href: '#services' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'A propos', href: '/Apropos' },
+  { label: 'Services', href: '/Services' },
+  { label: 'Contact', href: '/Contact' },
 ];
