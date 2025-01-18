@@ -1,7 +1,6 @@
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
-import Image from 'next/image';
 
 export default function Services() {
   return (
