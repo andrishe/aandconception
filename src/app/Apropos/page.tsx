@@ -6,18 +6,19 @@ import Image from 'next/image';
 export default function Apropos() {
   return (
     <div>
+      {/* Navbar avec position fixe */}
       <Navbar
         logoDark="/logoBlack.svg"
         links={navbarLinks}
         textColorDark="text-black"
-        dynamicLogo={false} // Désactive la bascule et force le logo noir
+        dynamicLogo={false}
+        className="fixed top-0 left-0 w-full bg-white z-50 shadow-md"
       />
 
-      {/* Titre juste en dessous de la Navbar */}
-
-      <div className="flex flex-col lg:flex-row items-center justify-center bg-white p-6 sm:p-8 md:p-12 mt-20">
+      {/* Conteneur principal avec espace en haut */}
+      <div className="flex flex-col lg:flex-row items-center justify-center bg-white p-6 sm:p-8 md:p-12 mt-24 z-0">
         {/* White Card */}
-        <div className="bg-secondary rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 z-10 -mr-0 lg:-mr-28 max-w-full lg:max-w-[365px] mb-8 lg:mb-0">
+        <div className="bg-secondary rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 z-0 -mr-0 lg:-mr-28 max-w-full lg:max-w-[365px] mb-8 lg:mb-0">
           <h1 className="text-[28px] text-primary font-medium mb-4">
             Qui suis-je ?
           </h1>
@@ -39,7 +40,7 @@ export default function Apropos() {
         </div>
 
         {/* Black Background with Design Image */}
-        <div className="bg-black rounded-3xl w-full lg:w-[500px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[500px] relative overflow-hidden flex items-center justify-center">
+        <div className="bg-black rounded-3xl w-full lg:w-[500px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[500px] relative overflow-hidden flex items-center justify-center z-0">
           <Image
             src="/Image12.png"
             alt="Interior Design"
