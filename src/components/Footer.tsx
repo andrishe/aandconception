@@ -3,6 +3,7 @@ import { Facebook, Instagram, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-gradient-to-r from-primary via-black to-secondary  ">
       <div className="flex flex-col lg:flex-row items-center justify-between border-b-2 border-neutral-200 p-6 mx-auto max-w-screen-xl">
@@ -61,7 +62,7 @@ export default function Footer() {
       {/* Copyright */}
       <div className="p-6 text-center text-secondary">
         <p className="text-sm">
-          © 2025 Copyright Designed by Sima Création Web
+          © {currentYear} Copyright Designed by Sima Création Web
         </p>
       </div>
     </footer>

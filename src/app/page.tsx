@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/app/Accueil.tsx/page';
-import Layouts from '@/components/Layouts';
+import Gallery from '@/components/Gallery';
 import Navbar from '@/components/Navbar';
 import Timeline from '@/components/Timeline';
 import { navbarLinks } from '@/data/data';
@@ -14,11 +14,11 @@ export default function Home() {
         links={navbarLinks}
         textColorLight="text-white"
         textColorDark="text-black"
-        dynamicLogo={true} // Active la bascule entre les deux logos
+        dynamicLogo={true}
       />
       <Header />
       <Timeline />
-      <Layouts />
+      <Gallery />
       <Footer />
     </div>
   );

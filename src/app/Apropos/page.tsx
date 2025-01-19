@@ -2,6 +2,7 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 export default function Apropos() {
   return (
@@ -12,43 +13,46 @@ export default function Apropos() {
         links={navbarLinks}
         textColorDark="text-black"
         dynamicLogo={false}
-        className="fixed top-0 left-0 w-full bg-white z-50 shadow-md"
       />
 
       {/* Conteneur principal avec espace en haut */}
-      <div className="flex flex-col lg:flex-row items-center justify-center bg-white p-6 sm:p-8 md:p-12 mt-24 z-0">
-        {/* White Card */}
-        <div className="bg-secondary rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 z-0 -mr-0 lg:-mr-28 max-w-full lg:max-w-[365px] mb-8 lg:mb-0">
-          <h1 className="text-[28px] text-primary font-medium mb-4">
-            Qui suis-je ?
-          </h1>
-          <p className="text-black text-sm sm:text-base lg:text-[15px] leading-relaxed mb-6 sm:mb-8">
-            Conceptrice d&apos;espace, Décoratrice d&apos;intérieur formée en
-            école d&apos;architecture intérieur et en agence. Nous vous
-            accompagnons dans la conception de votre projet d&apos;aménagement,
-            en vous proposant un lieu unique qui vous ressemble. En tant que
-            concepteur d&apos;espace, nous intervenons dans les projets de types
-            événementiels en vous proposant un aménagement à l&apos;image de
-            votre enseigne. A l&apos;affût des nouvelles tendances en décoration
-            et dans le design mobilier, nous nous efforçons de vous proposer des
-            intérieurs dans l&apos;air du temps.
-          </p>
+      <section className=" py-8 px-4 mx-auto max-w-screen-xl lg:py-16 mt-10 lg:mt-20">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8  p-6 sm:p-8 md:p-12">
+          {/* Bloc Texte */}
+          <div className="lg:max-w-[365px]">
+            <h1 className="text-black text-3xl md:text-5xl font-extrabold mb-4">
+              Qui suis-je ?
+            </h1>
+            <p className="text-black text-lg font-normal leading-relaxed mb-6">
+              Conceptrice d&apos;espace, Décoratrice d&apos;intérieur formée en
+              école d&apos;architecture intérieur et en agence. Nous vous
+              accompagnons dans la conception de votre projet
+              d&apos;aménagement, en vous proposant un lieu unique qui vous
+              ressemble. En tant que concepteur d&apos;espace, nous intervenons
+              dans les projets de types événementiels en vous proposant un
+              aménagement à l&apos;image de votre enseigne. À l&apos;affût des
+              nouvelles tendances en décoration et dans le design mobilier, nous
+              nous efforçons de vous proposer des intérieurs dans l&apos;air du
+              temps.
+            </p>
+            <button className="inline-flex justify-center items-center py-2.5 px-5 text-base font-medium text-white rounded-3xl bg-[#a8797f] hover:bg-[#926368] focus:ring-4 focus:ring-[#d8c4c1]">
+              Premier Contact
+              <ArrowRight className="w-4 h-4 ms-2" />
+            </button>
+          </div>
 
-          <button className="bg-primary text-white px-6 py-2 rounded-full mt-8 hover:bg-transparent hover:border hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50">
-            Premier Contact
-          </button>
+          {/* Image */}
+          <div className="w-full lg:w-[500px] h-[400px] sm:h-[450px] md:h-[500px] relative overflow-hidden rounded-3xl ">
+            <Image
+              src="/graduation.gif"
+              alt="Interior Design"
+              className="object-cover opacity-80 w-full h-full"
+              layout="fill"
+              unoptimized
+            />
+          </div>
         </div>
-
-        {/* Black Background with Design Image */}
-        <div className="bg-black rounded-3xl w-full lg:w-[500px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[500px] relative overflow-hidden flex items-center justify-center z-0">
-          <Image
-            src="/Image12.png"
-            alt="Interior Design"
-            className="object-cover opacity-60 w-full h-full"
-            layout="fill"
-          />
-        </div>
-      </div>
+      </section>
 
       <Footer />
     </div>

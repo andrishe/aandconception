@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -20,8 +21,9 @@ export default function Header() {
           L&apos;art de transformer vos intérieurs en espaces d&apos;exception,
           à votre image.
         </p>
-        <button className="bg-primary text-white px-6 py-2 rounded-full mt-8 hover:bg-secondary hover:text-black focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50">
+        <button className="inline-flex justify-center items-center mt-8 py-2.5 px-5 text-base font-medium text-white rounded-3xl bg-[#a8797f] hover:bg-[#926368] focus:ring-4 focus:ring-[#d8c4c1]">
           Premier Contact
+          <ArrowRight className="w-4 h-4 ms-2" />
         </button>
       </div>
     </div>
