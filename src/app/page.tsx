@@ -3,6 +3,7 @@ import Header from '@/app/Accueil.tsx/page';
 import Gallery from '@/components/Gallery';
 import Navbar from '@/components/Navbar';
 import Timeline from '@/components/Timeline';
+import Testimonial from '@/components/Testimonial';
 import { navbarLinks } from '@/data/data';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <Header />
       <Timeline />
       <Gallery />
+      <Testimonial />
       <Footer />
     </div>
   );

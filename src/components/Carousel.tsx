@@ -23,9 +23,9 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative ">
+    <div className="relative   ">
       {/* Carousel wrapper */}
-      <div className="relative h-56 md:h-96 overflow-hidden rounded-lg">
+      <div className="relative h-56 md:h-96 overflow-hidden rounded-lg ">
         {images.map((src, index) => (
           <div
             key={index}
@@ -40,7 +40,6 @@ const Carousel = () => {
               layout="fill"
             />
             {/* Overlay darkens the image */}
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30"></div>
           </div>
         ))}
       </div>
