@@ -1,5 +1,7 @@
 import React from 'react';
-import { Facebook, Instagram, Mail, Phone } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, X } from 'lucide-react';
+import { FaTiktok } from 'react-icons/fa';
+
 import Image from 'next/image';
 
 export default function Footer() {
@@ -51,11 +53,27 @@ export default function Footer() {
         </a>
 
         <a
-          href="https://www.instagram.com/aandconception/?api=1%2F&hl=zh-cn"
+          href="https://www.instagram.com/aandconception/ "
           className="text-white"
           aria-label="Instagram"
         >
           <Instagram className="h-6 w-6" />
+        </a>
+
+        <a
+          href="https://x.com/AandInterieur"
+          className="text-white"
+          aria-label="X"
+        >
+          <X className="h-6 w-6" />
+        </a>
+
+        <a
+          href=" https://www.tiktok.com/@aand_conception_interieur?lang=fr"
+          className="text-white"
+          aria-label="Tiktok"
+        >
+          <FaTiktok className="h-6 w-6" />
         </a>
       </div>
 
