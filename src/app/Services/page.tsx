@@ -9,6 +9,7 @@ import {
   Ruler,
   FileText,
   Hammer,
+  DoorOpen,
 } from 'lucide-react';
 import Image from 'next/image';
 import Footer from '@/components/Footer';
@@ -94,17 +95,21 @@ export default function Services() {
 
             {/* Service Architecture d'intérieur */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
+              {/* Image */}
               <div className="w-full md:w-1/2 h-40 md:h-auto relative">
                 <Image
                   src="/Image1.png"
                   alt="Architecture d'intérieur"
                   className="object-cover"
-                  layout="fill"
+                  fill
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30"></div>
               </div>
+
+              {/* Contenu */}
               <div className="p-6 flex flex-col justify-between">
                 <div>
+                  {/* Titre + Icône */}
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center">
                       <Home className="text-white w-5 h-5" />
@@ -113,27 +118,36 @@ export default function Services() {
                       Architecture d’intérieur
                     </span>
                   </div>
+
+                  {/* Sous-titre */}
                   <h2 className="text-lg font-semibold text-black mb-2">
                     Des espaces fonctionnels et esthétiques
                   </h2>
+
+                  {/* Paragraphe explicatif */}
                   <p className="text-sm text-gray-600 mb-4">
-                    Particulier ou Professionnel ,vous souhaitez un renouveau de
-                    votre intérieur. La disposition de vos pièces ne vous
-                    convient pas, la dimension de vos pièces vous semblent trop
-                    grandes. Votre maison ne contient pas de couloirs ou manque
-                    d&apos;ouvertures. Que vous soyez en cours de chantier ou
-                    dans une maison déjà construite, nous vous aidons à repenser
-                    vos espaces, en apportant des solutions concrètes à vos
-                    problèmes.
+                    Particulier ou professionnel, vous souhaitez repenser votre
+                    intérieur ? Nous optimisons vos espaces, en rénovation ou en
+                    construction, avec des solutions adaptées.
                   </p>
-                  <div className="grid grid-cols-1 gap-6 text-sm text-gray-600">
+
+                  {/* Services sous forme d'icônes */}
+                  <div className="grid grid-cols-2 gap-6 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <PenTool className="text-black w-6 h-6" />
                       <span>Rénovation</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Home className="text-black w-6 h-6" />
-                      <span>Agencements</span>
+                      <Ruler className="text-black w-6 h-6" />
+                      <span>Optimisation</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Layout className="text-black w-6 h-6" />
+                      <span>Agencement</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <DoorOpen className="text-black w-6 h-6" />
+                      <span>Ouvertures</span>
                     </div>
                   </div>
                 </div>
@@ -165,16 +179,11 @@ export default function Services() {
                     Conception de la maison de vos rêves
                   </h2>
                   <p className="text-sm text-gray-600 mb-4">
-                    Vous souhaitez construire la maison de vos rêves. Vous avez
-                    besoins d&apos;accompagnement pour concevoir cette maison,
-                    afin d&apos;y mettre une image dessus. AAND Conception
-                    Intérieur vous accompagne dans la conception des plans et de
-                    l&apos;architecture de votre maison, de l&apos;esquisse
-                    jusqu&apos;à la concrétisation du permis de construire. Nous
-                    proposons également un accompagnement complet, avec une
-                    décoration réfléchie sur mesure, pour la totalité de la
-                    maison.
+                    Vous rêvez de construire votre maison ? Nous vous accompagne
+                    de l’esquisse au permis de construire, avec une conception
+                    sur mesure et une décoration harmonieuse.
                   </p>
+
                   <div className="grid grid-cols-1 gap-6 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <Ruler className="text-primary w-6 h-6" />
