@@ -129,11 +129,11 @@ export default function Services() {
                   <div className="grid grid-cols-1 gap-6 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <PenTool className="text-black w-6 h-6" />
-                      <span>Rénovation et architecture d’intérieur</span>
+                      <span>Rénovation</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Home className="text-black w-6 h-6" />
-                      <span>Conception de villas individuelles</span>
+                      <span>Agencements</span>
                     </div>
                   </div>
                 </div>

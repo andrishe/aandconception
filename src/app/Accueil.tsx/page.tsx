@@ -21,8 +21,8 @@ export default function Header() {
           L&apos;art de transformer vos intérieurs en espaces d&apos;exception,
           à votre image.
         </p>
-        <button className="inline-flex justify-center items-center mt-8 py-2.5 px-5 text-base font-medium text-white rounded-3xl bg-[#a8797f] hover:bg-[#926368] focus:ring-4 focus:ring-[#d8c4c1]">
-          Premier Contact
+        <button className="inline-flex justify-center items-center mt-8 py-2.5 px-5 text-base font-medium text-white rounded-3xl  bg-primary hover:bg-primaryDark focus:ring-4 focus:ring-primaryLight">
+          <a href="/Contact">Premier Contact</a>
           <ArrowRight className="w-4 h-4 ms-2" />
         </button>
       </div>
