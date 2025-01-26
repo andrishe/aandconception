@@ -41,7 +41,7 @@ export default function Timeline() {
           {items.map((item, index) => (
             <li key={index} className="relative mb-6 sm:mb-0">
               <div className="flex items-center">
-                <div className="z-10 flex items-center justify-center w-10 h-10 bg-primary rounded-full ring-0 ring-white  sm:ring-8  shrink-0">
+                <div className="z-1 flex items-center justify-center w-10 h-10 bg-primary rounded-full ring-0 ring-white  sm:ring-8  shrink-0">
                   {item.icon}
                 </div>
                 {index < items.length - 1 && (

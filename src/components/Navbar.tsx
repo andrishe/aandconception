@@ -65,9 +65,9 @@ export default function Navbar({
           className="flex items-center justify-center w-10 h-10 md:hidden focus:outline-none"
         >
           {isOpen ? (
-            <X size={30} className={textColor} />
+            <X size={30} className={`text-black ${textColor}`} />
           ) : (
-            <AlignJustify size={30} className={textColor} />
+            <AlignJustify size={30} className={`text-black ${textColor}`} />
           )}
         </button>
         {/* Liens de navigation */}
@@ -84,14 +84,20 @@ export default function Navbar({
 
       {/* Menu mobile */}
       {isOpen && (
-        <div className="md:hidden fixed top-16 left-0 w-full bg-secondary z-20 flex flex-col items-center justify-center space-y-6">
+        <div className="md:hidden fixed top-0 left-0 w-full bg-secondary z-20 flex flex-col items-center justify-center space-y-6 pb-4">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 focus:outline-none"
+          >
+            <X size={30} className="text-black" />
+          </button>
           <ul className="text-xl font-medium">
             {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:text-primary text-white"
-                  onClick={() => setIsOpen(false)} // Ferme le menu
+                  className="hover:text-primary text-black"
+                  onClick={() => setIsOpen(false)}
                 >
                   {link.label}
                 </Link>

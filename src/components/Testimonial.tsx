@@ -41,7 +41,7 @@ const Carousel: React.FC = () => {
   return (
     <div className="relative border-t-2 border-t-secondary mx-auto w-full max-w-screen-xl ">
       <div className="text-center mt-10 mb-6">
-        <h3 className="text-2xl font-bold text-primary">
+        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-extrabold text-primary">
           Avis et retours d&apos;expérience
         </h3>
       </div>
@@ -54,12 +54,12 @@ const Carousel: React.FC = () => {
             }`}
             style={{ backfaceVisibility: 'hidden' }}
           >
-            <p className="mx-auto max-w-4xl text-xl italic  text-black">
+            <p className="mx-auto max-w-4xl text-sm italic text-black">
               {testimonial.text}
             </p>
 
             <div className="mb-6 mt-4 flex justify-center">
-              <div className="size-24 relative">
+              <div className="w-20 h-20 relative">
                 <Image
                   src={testimonial.image}
                   className="rounded-full shadow-lg dark:shadow-black/30"
@@ -70,25 +70,23 @@ const Carousel: React.FC = () => {
               </div>
             </div>
 
-            <p className="text-neutral-500 dark:text-neutral-300">
-              - {testimonial.name}
-            </p>
+            <p className="text-black ">{testimonial.name}</p>
           </div>
         ))}
       </div>
 
       <button
-        className="absolute top-1/2 left-24 transform -translate-y-1/2 -translate-x-1/2 z-[1] flex items-center justify-center h-10 w-10 bg-primary hover:bg-primaryDark rounded-full opacity-80 transition-opacity duration-150 ease-in-out hover:opacity-90 focus:opacity-90 motion-reduce:transition-none"
+        className="absolute top-1/2 left-4 sm:left-8 md:left-12 lg:left-24 transform -translate-y-1/2 -translate-x-1/2 z-[1] flex items-center justify-center h-10 w-10  opacity-80 transition-opacity duration-150 ease-in-out hover:opacity-90 focus:opacity-90 motion-reduce:transition-none"
         onClick={goToPrevious}
       >
-        <ChevronLeft className="w-6 h-6 text-white" />
+        <ChevronLeft className="w-6 h-6 text-black" />
       </button>
 
       <button
-        className="absolute top-1/2 right-24 transform -translate-y-1/2 translate-x-1/2 z-[1] flex items-center justify-center h-10 w-10 bg-primary hover:bg-primaryDark rounded-full opacity-80 transition-opacity duration-150 ease-in-out hover:opacity-90 focus:opacity-90 motion-reduce:transition-none"
+        className="absolute top-1/2 right-4 sm:right-8 md:right-12 lg:right-24 transform -translate-y-1/2 translate-x-1/2 z-[1] flex items-center justify-center h-10 w-10  opacity-80 transition-opacity duration-150 ease-in-out hover:opacity-90 focus:opacity-90 motion-reduce:transition-none"
         onClick={goToNext}
       >
-        <ChevronRight className="w-6 h-6 text-white" />
+        <ChevronRight className="w-6 h-6 text-black" />
       </button>
     </div>
   );
