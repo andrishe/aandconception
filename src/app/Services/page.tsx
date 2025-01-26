@@ -10,7 +10,9 @@ import {
   FileText,
   Hammer,
   DoorOpen,
+  Sofa,
 } from 'lucide-react';
+import { PiDresser } from 'react-icons/pi';
 import Image from 'next/image';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
@@ -77,7 +79,7 @@ export default function Services() {
                       <span>Mise en couleur</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Layout className="text-primary w-6 h-6" />
+                      <Sofa className="text-primary w-6 h-6" />
                       <span>Ameublement des pièces</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -85,7 +87,8 @@ export default function Services() {
                       <span>Conception de cuisines et salles de bain</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Home className="text-primary w-6 h-6" />
+                      {/* <Home className="text-primary w-6 h-6" /> */}
+                      <PiDresser className="text-primary w-6 h-6" />
                       <span>Création de dressings et rangements</span>
                     </div>
                   </div>
