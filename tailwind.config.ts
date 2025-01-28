@@ -32,16 +32,20 @@ export default {
   },
   plugins: [
     function ({ addBase, theme }: any) {
-      let colors = theme('colors');
-      let newVars = Object.fromEntries(
-        Object.entries(colors).flatMap(([key, value]) =>
-          typeof value === 'string'
-            ? [[`--${key}`, value]]
-            : Object.entries(value).map(([shade, hex]) => [
-                `--${key}-${shade}`,
-                hex,
-              ])
-        )
+      const colors = theme('colors');
+      const newVars = Object.fromEntries(
+        Object.entries(colors).flatMap(([key, value]) => {
+          // Vérifie si `value` est un objet
+          if (typeof value === 'object' && value !== null) {
+            return Object.entries(value).map(([shade, hex]) => [
+              `--${key}-${shade}`,
+              hex,
+            ]);
+          } else if (typeof value === 'string') {
+            return [[`--${key}`, value]];
+          }
+          return [];
+        })
       );
 
       addBase({

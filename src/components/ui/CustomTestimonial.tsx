@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 interface TestimonialItem {
@@ -31,29 +31,7 @@ export const CustomTestimonials: React.FC<CustomTestimonialsProps> = ({
 
   const [start, setStart] = useState<boolean>(false);
 
-  // Déclaration de la fonction à l'intérieur du useEffect
-  useEffect(() => {
-    function addAnimation() {
-      if (containerRef.current && scrollerRef.current) {
-        const scrollerContent = Array.from(scrollerRef.current.children);
-
-        scrollerContent.forEach((item) => {
-          const duplicatedItem = item.cloneNode(true);
-          if (scrollerRef.current) {
-            scrollerRef.current.appendChild(duplicatedItem);
-          }
-        });
-
-        getDirection();
-        getSpeed();
-        setStart(true);
-      }
-    }
-
-    addAnimation();
-  }, []);
-
-  const getDirection = () => {
+  const getDirection = useCallback(() => {
     if (containerRef.current) {
       if (direction === 'left') {
         containerRef.current.style.setProperty(
@@ -67,9 +45,9 @@ export const CustomTestimonials: React.FC<CustomTestimonialsProps> = ({
         );
       }
     }
-  };
+  }, [direction]);
 
-  const getSpeed = () => {
+  const getSpeed = useCallback(() => {
     if (containerRef.current) {
       if (speed === 'fast') {
         containerRef.current.style.setProperty('--animation-duration', '20s');
@@ -79,7 +57,28 @@ export const CustomTestimonials: React.FC<CustomTestimonialsProps> = ({
         containerRef.current.style.setProperty('--animation-duration', '80s');
       }
     }
-  };
+  }, [speed]);
+
+  const addAnimation = useCallback(() => {
+    if (containerRef.current && scrollerRef.current) {
+      const scrollerContent = Array.from(scrollerRef.current.children);
+
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        if (scrollerRef.current) {
+          scrollerRef.current.appendChild(duplicatedItem);
+        }
+      });
+
+      getDirection();
+      getSpeed();
+      setStart(true);
+    }
+  }, [getDirection, getSpeed]);
+
+  useEffect(() => {
+    addAnimation();
+  }, [addAnimation]);
 
   return (
     <div
