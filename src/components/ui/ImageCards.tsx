@@ -1,4 +1,5 @@
 'use client';
+
 import React, {
   useEffect,
   useRef,
@@ -160,7 +161,7 @@ interface CardProps {
 
 export const Card = ({ card, index, layout = false }: CardProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null); // Removed the `null` type
+  const containerRef = useRef<HTMLDivElement | null>(null); // Correctement typé ici
   const { onCardClose } = useContext(CarouselContext);
 
   useEffect(() => {
@@ -180,7 +181,12 @@ export const Card = ({ card, index, layout = false }: CardProps) => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [open]);
 
-  useOutsideClick(containerRef, () => handleClose());
+  // Vérification de nullité avant d'exécuter useOutsideClick
+  useEffect(() => {
+    if (containerRef.current) {
+      useOutsideClick(containerRef, () => handleClose());
+    }
+  }, [open]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -208,7 +214,7 @@ export const Card = ({ card, index, layout = false }: CardProps) => {
               exit={{ opacity: 0 }}
               ref={containerRef}
               layoutId={layout ? `card-${card.title}` : undefined}
-              className="max-w-5xl mx-auto bg-white  h-fit z-[60] my-10 p-4 md:p-10 rounded-3xl font-sans relative"
+              className="max-w-5xl mx-auto bg-white h-fit z-[60] my-10 p-4 md:p-10 rounded-3xl font-sans relative"
             >
               <button
                 className="sticky top-4 h-8 w-8 right-0 ml-auto bg-black  rounded-full flex items-center justify-center"
