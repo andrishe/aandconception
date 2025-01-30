@@ -7,6 +7,7 @@ import React, {
   createContext,
   useContext,
   ReactNode,
+  useCallback,
 } from 'react';
 
 import { CircleArrowLeft, CircleArrowRight, X } from 'lucide-react';
@@ -161,8 +162,13 @@ interface CardProps {
 
 export const Card = ({ card, index, layout = false }: CardProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement | null>(null); // Correctement typé ici
+  const containerRef = useRef<HTMLDivElement>(null);
   const { onCardClose } = useContext(CarouselContext);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    onCardClose(index);
+  }, [onCardClose, index]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -179,20 +185,13 @@ export const Card = ({ card, index, layout = false }: CardProps) => {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [open]);
+  }, [handleClose, open]);
 
-  // Déplacer l'appel de `useOutsideClick` hors du `useEffect`
   useOutsideClick(containerRef, handleClose);
 
   const handleOpen = () => {
     setOpen(true);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-    onCardClose(index);
-  };
-
   return (
     <>
       <AnimatePresence>
