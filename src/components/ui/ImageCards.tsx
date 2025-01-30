@@ -181,12 +181,8 @@ export const Card = ({ card, index, layout = false }: CardProps) => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [open]);
 
-  // Vérification de nullité avant d'exécuter useOutsideClick
-  useEffect(() => {
-    if (containerRef.current) {
-      useOutsideClick(containerRef, () => handleClose());
-    }
-  }, [open]);
+  // Déplacer l'appel de `useOutsideClick` hors du `useEffect`
+  useOutsideClick(containerRef, handleClose);
 
   const handleOpen = () => {
     setOpen(true);
