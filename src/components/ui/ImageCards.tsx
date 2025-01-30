@@ -160,7 +160,7 @@ interface CardProps {
 
 export const Card = ({ card, index, layout = false }: CardProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null); // Removed the `null` type
   const { onCardClose } = useContext(CarouselContext);
 
   useEffect(() => {
