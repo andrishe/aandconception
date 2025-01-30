@@ -276,6 +276,7 @@ interface BlurImageProps {
   src: string;
   className?: string;
   alt?: string;
+  fill?: boolean;
 }
 
 export const BlurImage = ({
