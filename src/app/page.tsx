@@ -1,10 +1,11 @@
 import Footer from '@/components/Footer';
 import Header from '@/app/Accueil.tsx/page';
-import Gallery from '@/components/Gallery';
+
 import Navbar from '@/components/Navbar';
 import Timeline from '@/components/Timeline';
 import Testimonial from '@/components/Testimonial';
 import { navbarLinks } from '@/data/data';
+import { GalleryCards } from '@/components/GalleryCards';
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
       />
       <Header />
       <Timeline />
-      <Gallery />
+      <GalleryCards />
       <Testimonial />
       <Footer />
     </div>
