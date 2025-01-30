@@ -230,7 +230,7 @@ export const Card = ({ card, index, layout = false }: CardProps) => {
               >
                 {card.title}
               </motion.p>
-              <motion.p className="text-neutral-600 text-base md:text-2xl font-sans max-w-3xl mx-auto mt-4">
+              <motion.p className="text-neutral-600 text-base md:text-2xl font-sans max-w-3xl  mt-4">
                 <span className="font-bold text-neutral-700">{card.text}</span>
               </motion.p>
 

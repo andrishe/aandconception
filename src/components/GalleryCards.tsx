@@ -43,7 +43,7 @@ const DummyContent: FC<DummyContentProps> = ({ images }) => {
       {images.map((imageSrc, index) => (
         <div
           key={'dummy-content' + index}
-          className="bg-[#F5F5F7] p-2 md:p-4 rounded-3xl mb-4"
+          className="bg-secondary/40 p-6 md:p-10 rounded-3xl mb-4"
         >
           <Image
             src={imageSrc}
@@ -145,17 +145,12 @@ const data: CardData[] = [
   {
     category: 'Lyon',
     title: "Aménagement d'une arrière-cuisine",
-    src: '/images/arc_1.png',
+    src: '/images/arc_2.png',
     text: 'Une ambiance chaleureuse et naturelle',
 
     content: (
       <DummyContent
-        images={[
-          '/images/arc_1.png',
-          '/images/arc_2.png',
-          '/images/arc_3.png',
-          '/images/arc_4.png',
-        ]}
+        images={['/images/arc_1.png', '/images/arc_3.png', '/images/arc_4.png']}
       />
     ),
   },
