@@ -2,7 +2,9 @@ export const navbarLinks = [
   { label: 'Accueil', href: '/' },
   { label: 'A propos', href: '/Apropos' },
   { label: 'Services', href: '/Services' },
+  { label: 'Blog', href: '/Blog' },
   { label: 'Contact', href: '/Contact' },
+  { label: 'Signin', href: '/Signin' },
 ];
 
 type ImagesType = {
