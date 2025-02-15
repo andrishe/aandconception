@@ -1,12 +1,12 @@
-// app/Error/page.tsx
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function ErrorPage() {
+function ErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
 
@@ -27,16 +27,16 @@ export default function ErrorPage() {
           <p className="mt-2 text-center text-sm text-gray-600">
             {error || "Désolé, quelque chose s'est mal passé"}
           </p>
-          <div className="mt-4 text-center">
-            <a
-              href="/Signin"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Retourner à la page de connexion
-            </a>
-          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ErrorPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ErrorContent />
+    </Suspense>
   );
 }
