@@ -1,21 +1,22 @@
+import React from 'react';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
-import React from 'react';
 
-const Blog = () => {
+const Create = () => {
   return (
-    <div className="bg-bgWhite min-h-screen">
+    <div className=" min-h-screen bg-bgWhite">
       <Navbar
         links={navbarLinks}
         textColorLight="text-black"
         logoDark="/logoBlack.svg"
         dynamicLogo={false}
       />
+
       <div className="flex justify-center items-center pt-20 ">
-        <h1>Blog</h1>
+        <h1>Create</h1>
       </div>
     </div>
   );
 };
 
-export default Blog;
+export default Create;

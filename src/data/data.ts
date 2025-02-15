@@ -1,10 +1,12 @@
-export const navbarLinks = [
+import { NavbarLinksType } from '@/types/navbar';
+
+export const navbarLinks: NavbarLinksType = [
   { label: 'Accueil', href: '/' },
   { label: 'A propos', href: '/Apropos' },
   { label: 'Services', href: '/Services' },
   { label: 'Blog', href: '/Blog' },
   { label: 'Contact', href: '/Contact' },
-  { label: 'Signin', href: '/Signin' },
+  { label: 'Signin', href: '/Signin', icon: 'UserRound' },
 ];
 
 type ImagesType = {

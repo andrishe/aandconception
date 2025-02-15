@@ -13,6 +13,7 @@ export default {
         foreground: 'var(--foreground)',
         secondary: '#f1e7e6',
         black: '#303030',
+        bgWite: '#F5EEEF',
         primary: '#a8797f',
         primaryDark: '#926368',
         primaryLight: '#d8c4c1',

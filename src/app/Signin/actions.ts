@@ -1,8 +1,7 @@
-// app/Signin/actions.ts
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createClient } from '@/utils/supabase/server'; // Update the import to use server.ts
+import { createClient } from '@/utils/supabase/server';
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -14,10 +13,8 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    // Redirection vers une page d'erreur en cas d'échec
-    throw new Error(error.message); // Gestion de l'erreur (affichage dans l'UI)
+    throw new Error(error.message);
   }
 
-  // Redirection après la connexion réussie
-  redirect('/Blog');
+  redirect('/Create');
 }
