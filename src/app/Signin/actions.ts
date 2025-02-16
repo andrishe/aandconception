@@ -16,5 +16,5 @@ export async function login(formData: FormData) {
     throw new Error(error.message);
   }
 
-  redirect('/Create');
+  redirect('/Blog/Create');
 }

@@ -1,22 +1,24 @@
+'use client';
+
 import React from 'react';
+import PostForm from '@/components/PostForm';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
+import Footer from '@/components/Footer';
 
-const Create = () => {
+export default function Create() {
   return (
-    <div className=" min-h-screen bg-bgWhite">
+    <div className="min-h-screen bg-bgWhite">
       <Navbar
         links={navbarLinks}
         textColorLight="text-black"
         logoDark="/logoBlack.svg"
         dynamicLogo={false}
       />
-
-      <div className="flex justify-center items-center pt-20 ">
-        <h1>Create</h1>
+      <div className="pt-20">
+        <PostForm />
       </div>
+      <Footer />
     </div>
   );
-};
-
-export default Create;
+}

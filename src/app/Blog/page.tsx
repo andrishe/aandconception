@@ -1,21 +1,41 @@
+import React from 'react';
+import { createClient } from '@/utils/supabase/clients';
+import BlogClient from '@/app/Blog/BlogClient';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
-import React from 'react';
+import Footer from '@/components/Footer';
 
-const Blog = () => {
+async function getPosts() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+export default async function Blog() {
+  const posts = await getPosts();
+
   return (
-    <div className="bg-bgWhite min-h-screen">
+    <div className="min-h-screen bg-bgWhite">
       <Navbar
         links={navbarLinks}
         textColorLight="text-black"
         logoDark="/logoBlack.svg"
         dynamicLogo={false}
       />
-      <div className="flex justify-center items-center pt-20 ">
-        <h1>Blog</h1>
+      <div className="pt-20">
+        <BlogClient initialPosts={posts} />
       </div>
+      <Footer />
     </div>
   );
-};
-
-export default Blog;
+}

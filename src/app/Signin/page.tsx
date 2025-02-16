@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { login } from './actions';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
+import Footer from '@/components/Footer';
 
 const Signin = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -87,6 +88,7 @@ const Signin = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
