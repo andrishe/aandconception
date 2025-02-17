@@ -9,13 +9,10 @@ type PostListProps = {
 
 const PostList = ({ posts, handleDelete }: PostListProps) => {
   return (
-    <div className="px-40 mb-20">
+    <div className="px-40 mb-20 ">
       {posts.map((post) => {
         return (
-          <div
-            key={post.id}
-            className="bg-white shadow-md rounded-lg overflow-hidden p-6"
-          >
+          <div key={post.id}>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
               {post.title}
             </h2>

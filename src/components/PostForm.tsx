@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/clients';
+import supabase from '@/utils/supabase/clients';
 
 interface PostFormData {
   title: string;
@@ -36,8 +36,6 @@ export default function PostForm() {
       const file = data.image[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
-
-      const supabase = createClient();
 
       // Upload image
       const { error: uploadError } = await supabase.storage

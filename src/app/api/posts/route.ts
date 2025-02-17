@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/clients';
+import supabase from '@/utils/supabase/clients';
 
 export async function GET() {
   try {
-    const supabase = createClient();
-
     const { data, error } = await supabase
       .from('posts')
       .select('*')
@@ -38,7 +36,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabase = createClient();
     const { data, error } = await supabase
       .from('posts')
       .insert([{ title, content, image_url }])

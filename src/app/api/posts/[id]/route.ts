@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/clients';
+import { NextRequest, NextResponse } from 'next/server';
+import supabase from '@/utils/supabase/clients';
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -10,8 +10,6 @@ export async function DELETE(
     if (!id) {
       return NextResponse.json({ error: 'Missing post ID' }, { status: 400 });
     }
-
-    const supabase = createClient();
 
     // Récupérer l'URL de l'image avant la suppression
     const { data: post, error: fetchError } = await supabase

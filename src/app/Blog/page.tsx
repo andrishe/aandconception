@@ -1,13 +1,11 @@
 import React from 'react';
-import { createClient } from '@/utils/supabase/clients';
+import supabase from '@/utils/supabase/clients';
 import BlogClient from '@/app/Blog/BlogClient';
 import Navbar from '@/components/Navbar';
 import { navbarLinks } from '@/data/data';
 import Footer from '@/components/Footer';
 
 async function getPosts() {
-  const supabase = createClient();
-
   const { data, error } = await supabase
     .from('posts')
     .select('*')
@@ -25,7 +23,7 @@ export default async function Blog() {
   const posts = await getPosts();
 
   return (
-    <div className="min-h-screen bg-bgWhite">
+    <div className="min-h-screen bg-bgWite">
       <Navbar
         links={navbarLinks}
         textColorLight="text-black"
