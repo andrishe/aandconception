@@ -3,10 +3,10 @@ import supabase from '@/utils/supabase/clients';
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const id = context.params.id;
+    const id = params.id;
     if (!id) {
       return NextResponse.json({ error: 'Missing post ID' }, { status: 400 });
     }
@@ -20,19 +20,28 @@ export async function DELETE(
 
     if (fetchError) {
       console.error('Error fetching post:', fetchError);
-      throw new Error('Failed to fetch post');
+      return NextResponse.json(
+        { error: 'Failed to fetch post' },
+        { status: 500 }
+      );
     }
 
     if (post?.image_url) {
-      // Supprimer l'image du storage
+      // Extract filename from the URL
       const fileName = post.image_url.split('/').pop();
-      const { error: storageError } = await supabase.storage
-        .from('posts-images')
-        .remove([fileName]);
+      if (fileName) {
+        // Supprimer l'image du storage
+        const { error: storageError } = await supabase.storage
+          .from('posts-images')
+          .remove([fileName]);
 
-      if (storageError) {
-        console.error('Error deleting image from storage:', storageError);
-        throw new Error('Failed to delete image');
+        if (storageError) {
+          console.error('Error deleting image from storage:', storageError);
+          // Continue with post deletion even if image deletion fails
+          console.warn(
+            'Continuing with post deletion despite image deletion failure'
+          );
+        }
       }
     }
 
@@ -44,12 +53,21 @@ export async function DELETE(
 
     if (deleteError) {
       console.error('Error deleting post:', deleteError);
-      throw new Error('Failed to delete post');
+      return NextResponse.json(
+        { error: 'Failed to delete post' },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ message: 'Post deleted successfully' });
+    return NextResponse.json(
+      { message: 'Post deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Unexpected error:', error);
-    return NextResponse.json({ error: 'Error deleting post' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
