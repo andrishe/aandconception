@@ -3,10 +3,10 @@ import supabase from '@/utils/supabase/clients';
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const id = context.params.id;
     if (!id) {
       return NextResponse.json({ error: 'Missing post ID' }, { status: 400 });
     }
@@ -37,7 +37,6 @@ export async function DELETE(
 
         if (storageError) {
           console.error('Error deleting image from storage:', storageError);
-          // Continue with post deletion even if image deletion fails
           console.warn(
             'Continuing with post deletion despite image deletion failure'
           );
