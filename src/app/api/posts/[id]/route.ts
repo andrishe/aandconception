@@ -3,10 +3,10 @@ import supabase from '@/utils/supabase/clients';
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = context.params.id;
+    const { id } = await context.params;
     if (!id) {
       return NextResponse.json({ error: 'Missing post ID' }, { status: 400 });
     }
@@ -27,16 +27,17 @@ export async function DELETE(
     }
 
     if (post?.image_url) {
-      // Extract filename from the URL
+      // Extraire le nom de fichier à partir de l'URL
       const fileName = post.image_url.split('/').pop();
       if (fileName) {
-        // Supprimer l'image du storage
+        // Supprimer l'image du stockage
         const { error: storageError } = await supabase.storage
           .from('posts-images')
           .remove([fileName]);
 
         if (storageError) {
           console.error('Error deleting image from storage:', storageError);
+          // Continuer avec la suppression du post même si la suppression de l'image échoue
           console.warn(
             'Continuing with post deletion despite image deletion failure'
           );
