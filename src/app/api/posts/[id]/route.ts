@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import supabase from '@/utils/supabase/clients';
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-export async function DELETE(_req: NextRequest, props: Props) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const id = props.params.id;
+    const id = params.id;
     if (!id) {
       return NextResponse.json({ error: 'Missing post ID' }, { status: 400 });
     }
