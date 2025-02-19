@@ -24,6 +24,11 @@ const testimonials: Testimonial[] = [
     image: '/images/mr_6.png',
     name: 'Mr Nadj',
   },
+  {
+    text: `"L'aménagement de la suite parentale a ete conçue par anina et réalisée par une entreprise de conception dressing et décoration basée à Mayotte.Celle-ci a fait fabriquer le dressing et la console par une entreprise de France métropolitaine .Du coup, le rendu est réussi"`,
+    image: '/images/mp_1.jng',
+    name: 'Madame User',
+  },
 ];
 
 const Testimonial = () => {
