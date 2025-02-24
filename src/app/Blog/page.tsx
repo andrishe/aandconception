@@ -30,6 +30,7 @@ export default async function Blog() {
         logoDark="/logoBlack.svg"
         dynamicLogo={false}
       />
+
       <div className="pt-20">
         <BlogClient initialPosts={posts} />
       </div>

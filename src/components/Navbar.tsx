@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AlignJustify, X } from 'lucide-react';
-import * as Icons from 'lucide-react';
+import { AlignJustify, X, LogOut } from 'lucide-react';
 import { NavbarLink } from '@/types/navbar';
+import { useUser } from '@/context/UserContext';
 
 interface NavbarProps {
   logoLight?: string;
@@ -26,12 +26,12 @@ export default function Navbar({
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user, logout } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -44,17 +44,6 @@ export default function Navbar({
       ? textColorDark
       : textColorLight
     : textColorDark;
-
-  // Fonction pour afficher l'icône
-  const renderIcon = (iconName?: keyof typeof Icons) => {
-    if (!iconName || !(iconName in Icons)) return null;
-
-    const IconComponent = Icons[iconName] as React.ComponentType<
-      React.SVGProps<SVGSVGElement>
-    >;
-
-    return <IconComponent className="w-5 h-5" />;
-  };
 
   return (
     <nav
@@ -86,35 +75,53 @@ export default function Navbar({
             <li key={link.href} className={textColor}>
               <Link
                 href={link.href}
-                className="hover:text-primary flex items-center gap-2"
+                className={
+                  link.label === 'Signin'
+                    ? 'px-4 py-2 rounded-full bg-[#a8797f] text-white font-semibold shadow-md hover:bg-[#926368] transition-all'
+                    : 'hover:text-primary flex items-center gap-2'
+                }
               >
-                {renderIcon(link.icon)}
-                {link.label !== 'Signin' && link.label}
+                {link.label === 'Signin' ? 'Connexion' : link.label}
               </Link>
             </li>
           ))}
+
+          {/* Bouton de déconnexion (s'affiche uniquement si l'utilisateur est connecté) */}
+          {user && (
+            <li>
+              <span
+                onClick={logout}
+                className="flex items-center gap-2 px-4 py-2 rounded-full  text-black  hover:text-[#926368] transition-all"
+              >
+                <LogOut size={16} />
+              </span>
+            </li>
+          )}
         </ul>
       </div>
 
       {/* Menu mobile */}
       {isOpen && (
-        <div className="md:hidden fixed top-0 left-0 w-full bg-secondary z-20 flex flex-col items-center justify-center space-y-6 pb-4">
+        <div className="md:hidden fixed top-0 left-0 w-full h-80 bg-secondary z-20 flex flex-col items-center space-y-6 pb-4">
           <button
             onClick={() => setIsOpen(false)}
             className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 focus:outline-none"
           >
             <X size={30} className="text-black" />
           </button>
-          <ul className="text-xl font-medium">
+          <ul className="text-xl font-medium flex flex-col items-center space-y-4">
             {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:text-primary text-black flex items-center gap-2"
+                  className={`${
+                    link.label === 'Signin'
+                      ? 'w-full px-4 py-2 mt-4 rounded-full bg-[#a8797f] text-white font-semibold shadow-md hover:bg-[#926368] transition-all text-center'
+                      : 'hover:text-primary text-black flex items-center gap-2'
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  {renderIcon(link.icon)}
-                  {link.label !== 'Signin' && link.label}
+                  {link.label === 'Signin' ? 'Connexion' : link.label}
                 </Link>
               </li>
             ))}

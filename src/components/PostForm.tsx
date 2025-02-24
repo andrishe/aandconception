@@ -11,16 +11,19 @@ interface PostFormData {
   image: FileList;
 }
 
-export default function PostForm() {
+interface PostFormProps {
+  onSuccess?: () => void; // Fonction de callback optionnelle
+}
+
+export default function PostForm({ onSuccess }: PostFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<PostFormData>();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
-  // Dans la fonction onSubmit, après avoir récupéré l'URL publique
 
   const onSubmit = async (data: PostFormData) => {
     try {
@@ -68,8 +71,19 @@ export default function PostForm() {
 
       if (!response.ok) throw new Error('Failed to create post');
 
-      router.push('/Blog');
-      router.refresh();
+      // Réinitialiser le formulaire
+      reset();
+
+      // Appeler la fonction de callback si elle existe
+      if (onSuccess) {
+        onSuccess();
+      }
+
+      // Navigation uniquement si aucun callback n'est fourni
+      else {
+        router.push('/Blog');
+        router.refresh();
+      }
     } catch (error) {
       console.error('Error creating post:', error);
       alert('Erreur lors de la création du post');
@@ -106,6 +120,7 @@ export default function PostForm() {
             {...register('content', { required: 'Le contenu est requis' })}
             placeholder="Écris quelque chose..."
             className="w-full mt-1 p-3 border border-[#d8c4c1] rounded-lg focus:ring-[#a8797f] focus:border-[#a8797f] outline-none"
+            rows={4}
           />
           {errors.content && (
             <p className="text-red-500 text-sm mt-1">
