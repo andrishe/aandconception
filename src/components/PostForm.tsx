@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import supabase from '@/utils/supabase/clients';
 
-interface PostFormData {
+type PostFormData = {
   title: string;
   content: string;
   image: FileList;
-}
+};
 
 interface PostFormProps {
   onSuccess?: () => void; // Fonction de callback optionnelle
