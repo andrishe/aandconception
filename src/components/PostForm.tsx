@@ -1,9 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import supabase from '@/utils/supabase/clients';
+import { useUser } from '@/context/UserContext';
+import Image from 'next/image';
+import { ImagePlus } from 'lucide-react';
 
 type PostFormData = {
   title: string;
@@ -12,10 +16,11 @@ type PostFormData = {
 };
 
 interface PostFormProps {
-  onSuccess?: () => void; // Fonction de callback optionnelle
+  onSuccess?: () => void;
 }
 
 export default function PostForm({ onSuccess }: PostFormProps) {
+  const { user } = useUser();
   const {
     register,
     handleSubmit,
@@ -24,12 +29,33 @@ export default function PostForm({ onSuccess }: PostFormProps) {
   } = useForm<PostFormData>();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  if (!user) {
+    return (
+      <p className="text-red-500 text-center">
+        Vous devez être connecté pour créer un post.
+      </p>
+    );
+  }
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
+  };
 
   const onSubmit = async (data: PostFormData) => {
     try {
       setLoading(true);
 
-      // Vérification de la présence d'une image
       if (!data.image || data.image.length === 0) {
         alert('Veuillez sélectionner une image.');
         setLoading(false);
@@ -40,16 +66,12 @@ export default function PostForm({ onSuccess }: PostFormProps) {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
 
-      // Upload image
       const { error: uploadError } = await supabase.storage
         .from('posts-images')
         .upload(fileName, file);
 
-      if (uploadError) {
-        throw new Error(`Upload failed: ${uploadError.message}`);
-      }
+      if (uploadError) throw new Error(`Upload failed: ${uploadError.message}`);
 
-      // Récupérer l'URL publique de l'image
       const { data: urlData } = supabase.storage
         .from('posts-images')
         .getPublicUrl(fileName);
@@ -58,7 +80,6 @@ export default function PostForm({ onSuccess }: PostFormProps) {
         throw new Error('Failed to get public URL of the uploaded image');
       }
 
-      // Création du post
       const response = await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -66,20 +87,15 @@ export default function PostForm({ onSuccess }: PostFormProps) {
           title: data.title,
           content: data.content,
           image_url: urlData.publicUrl,
+          user_id: user.id,
         }),
       });
 
       if (!response.ok) throw new Error('Failed to create post');
 
-      // Réinitialiser le formulaire
       reset();
-
-      // Appeler la fonction de callback si elle existe
-      if (onSuccess) {
-        onSuccess();
-      }
-
-      // Navigation uniquement si aucun callback n'est fourni
+      setImagePreview(null);
+      if (onSuccess) onSuccess();
       else {
         router.push('/Blog');
         router.refresh();
@@ -98,29 +114,40 @@ export default function PostForm({ onSuccess }: PostFormProps) {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 md:p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold text-center text-[#926368]">
-          Créer un Post
+        <h2 className="text-2xl font-bold text-center text-[#926368] mb-6">
+          Créer un Article
         </h2>
 
-        <div className="mt-4">
-          <label className="block text-[#926368] font-medium">Titre</label>
+        <div className="mb-4">
+          <label
+            htmlFor="title"
+            className="block text-[#926368] font-medium mb-2"
+          >
+            Titre
+          </label>
           <input
+            id="title"
             {...register('title', { required: 'Le titre est requis' })}
             placeholder="Titre du post"
-            className="w-full mt-1 p-3 border border-[#d8c4c1] rounded-lg focus:ring-[#a8797f] focus:border-[#a8797f] outline-none"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#926368] transition duration-300"
           />
           {errors.title && (
             <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
           )}
         </div>
 
-        <div className="mt-4">
-          <label className="block text-[#926368] font-medium">Contenu</label>
+        <div className="mb-4">
+          <label
+            htmlFor="content"
+            className="block text-[#926368] font-medium mb-2"
+          >
+            Contenu
+          </label>
           <textarea
+            id="content"
             {...register('content', { required: 'Le contenu est requis' })}
             placeholder="Écris quelque chose..."
-            className="w-full mt-1 p-3 border border-[#d8c4c1] rounded-lg focus:ring-[#a8797f] focus:border-[#a8797f] outline-none"
-            rows={4}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#926368] transition duration-300 resize-y min-h-[100px]"
           />
           {errors.content && (
             <p className="text-red-500 text-sm mt-1">
@@ -129,27 +156,57 @@ export default function PostForm({ onSuccess }: PostFormProps) {
           )}
         </div>
 
-        <div className="mt-4">
-          <label className="block text-[#926368] font-medium">Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            {...register('image', { required: 'Une image est requise' })}
-            className="w-full mt-1 p-2 border border-[#d8c4c1] rounded-lg bg-[#F5EEEF] cursor-pointer"
-          />
+        <div className="mb-6">
+          <label
+            htmlFor="image"
+            className="block text-[#926368] font-medium mb-2"
+          >
+            Image
+          </label>
+          <div className="relative">
+            <input
+              id="image"
+              type="file"
+              accept="image/*"
+              {...register('image', { required: 'Une image est requise' })}
+              onChange={handleImageChange}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div className="flex items-center justify-center w-full p-3 border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-[#926368] transition duration-300">
+              <ImagePlus className="h-6 w-6 text-[#926368]" />
+              <span className="ml-2 text-sm text-gray-600">
+                Choisir une image
+              </span>
+            </div>
+          </div>
           {errors.image && (
-            <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+            <p className="text-red-500 text-sm mt-2">{errors.image.message}</p>
+          )}
+
+          {imagePreview && (
+            <div className="mt-4">
+              <p className="text-sm text-gray-600 mb-2">
+                Aperçu de l&apos;image:
+              </p>
+              <div className="relative w-full h-40 overflow-hidden rounded-lg border-2 border-gray-300 shadow-md">
+                <Image
+                  src={imagePreview || '/placeholder.svg'}
+                  alt="Aperçu"
+                  layout="fill"
+                  objectFit="cover"
+                  className="transition-all duration-300 ease-in-out transform hover:scale-105"
+                />
+              </div>
+            </div>
           )}
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className={`mt-6 w-full bg-[#a8797f] text-white font-semibold py-3 rounded-lg shadow-md transition-all ${
-            loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#926368]'
-          }`}
+          className="w-full bg-[#a8797f] text-white font-semibold py-3 px-4 rounded-lg hover:bg-[#926368] transition duration-300 focus:outline-none focus:ring-2 focus:ring-[#926368] focus:ring-opacity-50"
         >
-          {loading ? 'Création en cours...' : 'Ajouter le Post'}
+          {loading ? 'Création en cours...' : 'Ajouter'}
         </button>
       </form>
     </div>

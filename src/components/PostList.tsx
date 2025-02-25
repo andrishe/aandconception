@@ -6,6 +6,7 @@ import Image from 'next/image';
 import PostForm from './PostForm';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlusCircle } from 'lucide-react';
+import { useUser } from '@/context/UserContext';
 
 type PostListProps = {
   posts: Posts[];
@@ -14,11 +15,10 @@ type PostListProps = {
 
 const PostList = ({ posts, handleDelete }: PostListProps) => {
   const [showForm, setShowForm] = useState(false);
+  const { user } = useUser();
 
   // Fonction pour ajouter un post à la liste (à passer à PostForm)
   const handleAddPost = () => {
-    // Cette fonction serait appelée après qu'un post est créé
-    // Vous pourriez recharger les posts ou mettre à jour l'état
     setShowForm(false);
   };
 
@@ -29,20 +29,23 @@ const PostList = ({ posts, handleDelete }: PostListProps) => {
       </h1>
 
       {/* Bouton pour afficher/masquer le formulaire */}
-      <motion.div
-        className="flex justify-center mb-12"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="group flex items-center px-6 py-3 bg-white text-primary rounded-full shadow-lg transition-all duration-300 hover:bg-primary hover:text-white"
+      {user && (
+        <motion.div
+          className="flex justify-center mb-12"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <PlusCircle className="mr-2 h-5 w-5 transition-transform group-hover:rotate-90" />
-          {showForm ? 'Masquer le formulaire' : 'Créer un nouvel article'}
-        </button>
-      </motion.div>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="group flex items-center px-6 py-3 bg-white text-primary rounded-full shadow-lg transition-all duration-300 hover:bg-primary hover:text-white"
+          >
+            <PlusCircle className="mr-2 h-5 w-5 transition-transform group-hover:rotate-90" />
+            {showForm ? 'Masquer le formulaire' : 'Créer un nouvel article'}
+          </button>
+        </motion.div>
+      )}
 
+      {/* Affichage du formulaire si l'utilisateur clique pour en ajouter un */}
       <AnimatePresence>
         {showForm && (
           <motion.div
@@ -60,46 +63,42 @@ const PostList = ({ posts, handleDelete }: PostListProps) => {
       <div className="border-b border-gray-200 mb-8"></div>
 
       {/* Affichage si aucun article */}
-      {posts.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg">
-          Aucun article disponible pour le moment.
-        </p>
-      ) : (
-        <div className="space-y-16">
-          {posts.map((post) => (
-            <article key={post.id} className="border-b pb-10">
-              {/* Titre */}
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {post.title}
-              </h2>
+      {posts.map((post) => (
+        <article key={post.id} className="border-b pb-10">
+          {/* Titre */}
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            {post.title}
+          </h2>
 
-              {/* Image */}
-              <div className="w-full h-96 mb-6 relative">
-                <Image
-                  src={post.image_url}
-                  alt={post.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
+          {/* Image */}
+          {post.image_url && (
+            <div className="w-full h-96 mb-6 relative">
+              <Image
+                src={post.image_url}
+                alt={post.title}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg"
+              />
+            </div>
+          )}
 
-              {/* Contenu */}
-              <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                {post.content}
-              </p>
+          {/* Contenu */}
+          <p className="text-lg text-gray-700 leading-relaxed mb-6">
+            {post.content}
+          </p>
 
-              {/* Bouton de suppression */}
-              <button
-                onClick={() => handleDelete(post.id)}
-                className="text-red-600 hover:text-red-800 font-medium"
-              >
-                Supprimer l&apos;article
-              </button>
-            </article>
-          ))}
-        </div>
-      )}
+          {/* Affichage du bouton de suppression seulement si l'utilisateur est connecté et si l'ID de l'utilisateur correspond à celui du post */}
+          {user && post.user_id === user.id && (
+            <button
+              onClick={() => handleDelete(post.id)}
+              className="text-red-600 hover:text-red-800 font-medium"
+            >
+              Supprimer l&apos;article
+            </button>
+          )}
+        </article>
+      ))}
     </div>
   );
 };

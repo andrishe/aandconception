@@ -24,16 +24,16 @@ export default function Apropos() {
               Qui suis-je ?
             </h1>
             <p className="text-black text-lg font-normal leading-relaxed mb-6">
-              Architectes d&apos;intérieur et designers, formés en école
-              d&apos;architecture intérieure et en agence, nous vous
-              accompagnons dans la conception de vos projets de rénovation ou de
-              décoration intérieure en créant des lieux uniques qui vous
-              ressemblent. En tant que designers d&apos;espace, nous intervenons
-              également dans les projets événementiels, en proposant des
-              aménagements à l&apos;image de votre enseigne. Toujours à
-              l&apos;affût des nouvelles tendances en décoration et design
-              mobilier, nous nous efforçons de vous offrir des intérieurs
-              modernes et dans l&apos;air du temps.
+              Architecte d&apos;intérieur et designer, formée en école
+              d&apos;architecture intérieure et en agence, je vous accompagne
+              dans la conception de vos projets de rénovation ou de décoration
+              intérieure en créant des lieux uniques qui vous ressemblent. En
+              tant que designer d&apos;espace, j&apos;interviens également dans
+              les projets événementiels, en proposant des aménagements à
+              l&apos;image de votre enseigne. Toujours à l&apos;affût des
+              nouvelles tendances en décoration et design mobilier, je
+              m&apos;efforce de vous offrir des intérieurs modernes et dans
+              l&apos;air du temps.
             </p>
             <button className="inline-flex justify-center items-center py-2.5 px-5 text-base font-medium text-white rounded-3xl bg-primary hover:bg-primaryDark focus:ring-4 focus:ring-primaryLight">
               <a href="/Contact">Premier Contact</a>
