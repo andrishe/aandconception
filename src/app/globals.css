@@ -3,19 +3,60 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf6f1;
+  --foreground: #2b2724;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus clavier visible partout (socle de qualité du skill frontend-design). */
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Respect de prefers-reduced-motion : aucune animation non sollicitée. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* La vidéo du hero cède la place à son image fixe. */
+  .hero-still {
+    background-image: url('/images/lsa_5.png');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-still video {
+    display: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted;
+  }
+
+  .section-label::before {
+    content: '';
+    @apply inline-block h-1.5 w-1.5 rounded-full bg-clay;
+  }
 }

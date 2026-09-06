@@ -4,9 +4,6 @@ import { useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { login } from './actions';
-import Navbar from '@/components/Navbar';
-import { navbarLinks } from '@/data/data';
-import Footer from '@/components/Footer';
 
 const Signin = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -23,12 +20,6 @@ const Signin = () => {
 
   return (
     <div className=" min-h-screen bg-bgWhite">
-      <Navbar
-        links={navbarLinks}
-        textColorLight="text-black"
-        logoDark="/logoBlack.svg"
-        dynamicLogo={false}
-      />
       <div className="flex min-h-screen items-center justify-center  px-4 md:px-0">
         <ToastContainer position="top-right" autoClose={3000} />
         <div className="w-full max-w-sm md:max-w-md lg:max-w-lg bg-white p-6 md:p-8 rounded-2xl shadow-xl">
@@ -88,7 +79,6 @@ const Signin = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

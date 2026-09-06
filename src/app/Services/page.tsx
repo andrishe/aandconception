@@ -1,225 +1,141 @@
-'use client';
-
+import Image from 'next/image';
 import {
-  PenTool,
-  Home,
-  Layout,
-  Palette,
-  LayoutDashboard,
-  Ruler,
+  DoorOpen,
   FileText,
   Hammer,
-  DoorOpen,
+  Home,
+  Layout,
+  LayoutDashboard,
+  Palette,
+  PenTool,
+  Ruler,
   Sofa,
 } from 'lucide-react';
 import { PiDresser } from 'react-icons/pi';
-import Image from 'next/image';
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
-import { navbarLinks } from '@/data/data';
-import Carousel from '@/components/Carousel';
+
+export const metadata = {
+  title: 'Nos Services — Lataléaand',
+  description:
+    "Découvrez nos prestations en décoration et architecture d'intérieur.",
+};
+
+const services = [
+  {
+    label: 'Décoration',
+    title: 'Améliorez votre intérieur avec nos conseils déco',
+    description:
+      'Lors d’un échange téléphonique ou d’un rendez-vous, nous définissons ensemble vos besoins et vos envies pour choisir le mobilier, l’éclairage et les accessoires.',
+    image: '/Image9.png',
+    alt: 'Décoration intérieure',
+    items: [
+      { icon: PenTool, label: 'Conseil en décoration' },
+      { icon: Palette, label: 'Mise en couleur' },
+      { icon: Sofa, label: 'Ameublement des pièces' },
+      { icon: LayoutDashboard, label: 'Conception de cuisines et salles de bain' },
+      { icon: PiDresser, label: 'Création de dressings et rangements' },
+    ],
+  },
+  {
+    label: 'Architecture d’intérieur',
+    title: 'Des espaces fonctionnels et esthétiques',
+    description:
+      'Particulier ou professionnel, vous souhaitez repenser votre intérieur ? Nous optimisons vos espaces, en rénovation ou en construction, avec des solutions adaptées.',
+    image: '/Image1.png',
+    alt: "Architecture d'intérieur",
+    items: [
+      { icon: PenTool, label: 'Rénovation' },
+      { icon: Ruler, label: 'Optimisation' },
+      { icon: Layout, label: 'Agencement' },
+      { icon: DoorOpen, label: 'Ouvertures' },
+    ],
+  },
+  {
+    label: 'Permis Maison Individuelle',
+    title: 'Conception de la maison de vos rêves',
+    description:
+      'Vous rêvez de construire votre maison ? Nous vous accompagne de l’esquisse au permis de construire, avec une conception sur mesure et une décoration harmonieuse.',
+    image: '/Image2.png',
+    alt: 'Permis Maison Individuelle',
+    items: [
+      { icon: Ruler, label: 'Conception des plans architecturaux' },
+      { icon: FileText, label: 'Obtention du permis de construire' },
+      { icon: Palette, label: 'Décoration intérieure sur mesure' },
+      { icon: Hammer, label: 'Suivi du chantier' },
+    ],
+  },
+];
+
+const serviceIcons = [PenTool, Home, FileText];
 
 export default function Services() {
   return (
-    <div>
-      <Navbar
-        logoDark="/logoBlack.svg"
-        links={navbarLinks}
-        textColorDark="text-black"
-        dynamicLogo={false}
-      />
+    <div className="bg-cream">
+      <section className="px-5 pb-20 pt-32 lg:px-10 lg:pb-28 lg:pt-40">
+        <div className="mx-auto max-w-screen-xl">
+          <h2 className="section-label">Nos prestations</h2>
 
-      <div className="bg-secondary pt-20">
-        <section className="container mx-auto px-4 py-12">
-          <div className="max-w-screen-lg mx-auto text-center mb-10">
-            <h1 className="text-4xl font-bold text-black">Nos Services</h1>
-            <p className="text-lg text-primary mt-2">
-              Découvrez nos prestations en décoration et architecture
-              d&apos;intérieur.
-            </p>
+          <h1 className="mt-8 font-serif text-4xl leading-tight text-ink sm:text-5xl lg:text-6xl">
+            Nos Services
+          </h1>
+          <p className="mt-6 max-w-[58ch] text-base leading-relaxed text-muted">
+            Découvrez nos prestations en décoration et architecture
+            d&apos;intérieur.
+          </p>
+
+          <div className="mt-16 space-y-6">
+            {services.map((service, index) => {
+              const Badge = serviceIcons[index];
+              return (
+                <article
+                  key={service.label}
+                  className="grid overflow-hidden rounded-3xl border border-line bg-white md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]"
+                >
+                  <div className="relative h-56 md:h-auto md:min-h-[340px]">
+                    <Image
+                      src={service.image}
+                      alt={service.alt}
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      fill
+                    />
+                  </div>
+
+                  <div className="p-7 lg:p-12">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-cream">
+                        <Badge className="h-5 w-5 text-clay" />
+                      </span>
+                      <span className="text-sm text-muted">
+                        {service.label}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-6 font-serif text-2xl leading-snug text-ink lg:text-3xl">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-muted">
+                      {service.description}
+                    </p>
+
+                    <ul className="mt-8 grid gap-x-8 gap-y-4 border-t border-line pt-7 sm:grid-cols-2">
+                      {service.items.map((item) => (
+                        <li
+                          key={item.label}
+                          className="flex items-start gap-3 text-sm text-inkSoft"
+                        >
+                          <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-clay" />
+                          <span>{item.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              );
+            })}
           </div>
+        </div>
+      </section>
 
-          <div className="grid gap-8 lg:grid-cols-2">
-            {/* Service Décoration */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
-              <div className="w-full md:w-1/2 h-40 md:h-auto relative">
-                <Image
-                  src="/Image9.png"
-                  alt="Décoration intérieure"
-                  className="object-cover"
-                  fill
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30"></div>
-              </div>
-              <div className="p-6 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                      <PenTool className="text-white w-5 h-5" />
-                    </div>
-                    <span className="text-black text-sm font-medium">
-                      Décoration
-                    </span>
-                  </div>
-                  <h2 className="text-lg font-semibold text-black mb-2">
-                    Améliorez votre intérieur avec nos conseils déco
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Lors d’un échange téléphonique ou d’un rendez-vous, nous
-                    définissons ensemble vos besoins et vos envies pour choisir
-                    le mobilier, l’éclairage et les accessoires.
-                  </p>
-                  <div className="grid grid-cols-1 gap-6 text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <PenTool className="text-primary w-6 h-6" />
-                      <span>Conseil en décoration</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Palette className="text-primary w-6 h-6" />
-                      <span>Mise en couleur</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Sofa className="text-primary w-6 h-6" />
-                      <span>Ameublement des pièces</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <LayoutDashboard className="text-primary w-6 h-6" />
-                      <span>Conception de cuisines et salles de bain</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {/* <Home className="text-primary w-6 h-6" /> */}
-                      <PiDresser className="text-primary w-6 h-6" />
-                      <span>Création de dressings et rangements</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Service Architecture d'intérieur */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
-              {/* Image */}
-              <div className="w-full md:w-1/2 h-40 md:h-auto relative">
-                <Image
-                  src="/Image1.png"
-                  alt="Architecture d'intérieur"
-                  className="object-cover"
-                  fill
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30"></div>
-              </div>
-
-              {/* Contenu */}
-              <div className="p-6 flex flex-col justify-between">
-                <div>
-                  {/* Titre + Icône */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center">
-                      <Home className="text-white w-5 h-5" />
-                    </div>
-                    <span className="text-black text-sm font-medium">
-                      Architecture d’intérieur
-                    </span>
-                  </div>
-
-                  {/* Sous-titre */}
-                  <h2 className="text-lg font-semibold text-black mb-2">
-                    Des espaces fonctionnels et esthétiques
-                  </h2>
-
-                  {/* Paragraphe explicatif */}
-                  <p className="text-sm text-gray-600 mb-4">
-                    Particulier ou professionnel, vous souhaitez repenser votre
-                    intérieur ? Nous optimisons vos espaces, en rénovation ou en
-                    construction, avec des solutions adaptées.
-                  </p>
-
-                  {/* Services sous forme d'icônes */}
-                  <div className="grid grid-cols-2 gap-6 text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <PenTool className="text-black w-6 h-6" />
-                      <span>Rénovation</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Ruler className="text-black w-6 h-6" />
-                      <span>Optimisation</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Layout className="text-black w-6 h-6" />
-                      <span>Agencement</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <DoorOpen className="text-black w-6 h-6" />
-                      <span>Ouvertures</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Service Permis Maison Individuelle */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
-              <div className="w-full md:w-1/2 h-40 md:h-auto relative">
-                <Image
-                  src="/Image2.png"
-                  alt="Permis Maison Individuelle"
-                  className="object-cover"
-                  layout="fill"
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-primary opacity-30"></div>
-              </div>
-              <div className="p-6 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                      <FileText className="text-white w-5 h-5" />
-                    </div>
-                    <span className="text-black text-sm font-medium">
-                      Permis Maison Individuelle
-                    </span>
-                  </div>
-                  <h2 className="text-lg font-semibold text-black mb-2">
-                    Conception de la maison de vos rêves
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Vous rêvez de construire votre maison ? Nous vous accompagne
-                    de l’esquisse au permis de construire, avec une conception
-                    sur mesure et une décoration harmonieuse.
-                  </p>
-
-                  <div className="grid grid-cols-1 gap-6 text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <Ruler className="text-primary w-6 h-6" />
-                      <span>Conception des plans architecturaux</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FileText className="text-primary w-6 h-6" />
-                      <span>Obtention du permis de construire</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Palette className="text-primary w-6 h-6" />
-                      <span>Décoration intérieure sur mesure</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Hammer className="text-primary w-6 h-6" />
-                      <span>Suivi du chantier</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-10">
-            <h2 className="text-2xl font-semibold text-black text-center mt-20 mb-10">
-              Nos Réalisations
-            </h2>
-            <Carousel />
-          </div>
-        </section>
-      </div>
-
-      <Footer />
     </div>
   );
 }

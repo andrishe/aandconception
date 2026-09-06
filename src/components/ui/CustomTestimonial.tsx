@@ -84,14 +84,14 @@ export const CustomTestimonials: React.FC<CustomTestimonialsProps> = ({
     <div
       ref={containerRef}
       className={cn(
-        'scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_5%,white_95%,transparent)]',
+        'scroller relative z-20 mx-auto max-w-screen-xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]',
         className
       )}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          'flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap ',
+          'flex w-max min-w-full shrink-0 flex-nowrap gap-5 py-4',
           start && 'animate-scroll ',
           pauseOnHover && 'hover:[animation-play-state:paused]'
         )}
@@ -99,32 +99,30 @@ export const CustomTestimonials: React.FC<CustomTestimonialsProps> = ({
         {items.map((item) => (
           <li
             key={item.name}
-            className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]"
-            style={{
-              background: '#303030',
-            }}
+            className="relative flex w-[320px] max-w-full flex-shrink-0 flex-col justify-between rounded-3xl border border-line bg-cream px-8 pb-7 pt-6 md:w-[420px]"
           >
             <blockquote>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <div className="flex flex-row items-center gap-2">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      className="w-6 h-6 rounded-full object-cover mb-4"
-                      width={64}
-                      height={64}
-                    />
-                    <span className="text-sm leading-[1.6] text-secondary font-normal mb-3">
-                      {item.name}
-                    </span>
-                  </div>
-                  <span className="text-sm leading-[1.6] text-white font-normal">
-                    {item.text}
-                  </span>
-                </span>
-              </div>
+              <span
+                aria-hidden="true"
+                className="font-serif text-5xl leading-none text-clay/30"
+              >
+                &ldquo;
+              </span>
+              <p className="mt-2 text-sm leading-relaxed text-inkSoft">
+                {item.text}
+              </p>
             </blockquote>
+
+            <figcaption className="mt-7 flex items-center gap-3 border-t border-line pt-5">
+              <Image
+                src={item.image}
+                alt=""
+                className="h-10 w-10 shrink-0 rounded-full object-cover"
+                width={80}
+                height={80}
+              />
+              <span className="text-sm font-medium text-ink">{item.name}</span>
+            </figcaption>
           </li>
         ))}
       </ul>

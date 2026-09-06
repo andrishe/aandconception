@@ -1,14 +1,15 @@
 'use client';
 
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
-import { navbarLinks } from '@/data/data';
 import Image from 'next/image';
-import { Phone, MessageCircle, Mail } from 'lucide-react';
+import { Mail, MessageCircle, Phone } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import useWeb3forms from '@web3forms/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { contactInfo } from '@/data/data';
+
+const fieldClass =
+  'w-full rounded-xl border bg-white p-3 text-sm text-ink placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-clay/40';
 
 export default function Contact() {
   const {
@@ -23,7 +24,7 @@ export default function Contact() {
   const { submit: onSubmit } = useWeb3forms({
     access_key: apiKey,
     settings: {
-      from_name: 'AAND Conception Intérieur',
+      from_name: 'Lataléaand Intérieur',
       subject: 'Nouveau message de contact',
     },
     onSuccess: () => {
@@ -36,193 +37,218 @@ export default function Contact() {
       });
     },
   });
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar
-        logoDark="/logoBlack.svg"
-        links={navbarLinks}
-        textColorDark="text-black"
-        dynamicLogo={false}
-      />
-      <div className="container mx-auto px-4 py-12 mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          {/* Section Image */}
-          <div className="w-full flex justify-center">
-            <Image
-              src="/room.svg"
-              alt="Sample image"
-              width={500}
-              height={500}
-              className="max-w-full h-auto"
-            />
-          </div>
+    <div className="bg-cream">
+      <section className="px-5 pb-20 pt-32 lg:px-10 lg:pb-28 lg:pt-40">
+        <div className="mx-auto max-w-screen-xl">
+          <h2 className="section-label">Contact</h2>
 
-          {/* Formulaire */}
-          <div className="bg-gradient-to-r from-primary to-black p-8 rounded-lg">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Champ caché anti-bot */}
-              <input type="hidden" value="" {...register('botcheck')} />
-
-              {/* Champ de signature caché */}
-              <input
-                type="hidden"
-                name="form_signature"
-                value="Contact Form Submission"
-              />
-              <h1 className="text-3xl md:text-4xl font-bold text-center text-white mb-8">
+          <div className="mt-10 grid gap-14 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <h1 className="font-serif text-4xl leading-tight text-ink sm:text-5xl lg:text-6xl">
                 Contactez-nous
               </h1>
-              <div className="flex justify-center mb-6 space-x-4">
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white hover:bg-primary-accent focus:outline-none"
-                >
-                  <Phone className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white hover:bg-primary-accent focus:outline-none"
-                >
-                  <Mail className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white hover:bg-primary-accent focus:outline-none"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                </button>
-              </div>
+              <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-muted">
+                Parlez-nous de votre projet, de la pièce à repenser jusqu&apos;à
+                la construction complète. Nous vous répondons sous quelques
+                jours.
+              </p>
 
-              <div className="mb-6">
-                <label
-                  htmlFor="name"
-                  className="block mb-2 font-medium text-white"
-                >
-                  Nom
-                </label>
-                <input
-                  type="text"
-                  autoComplete="off"
-                  placeholder="Entrez votre nom complet"
-                  className={`w-full p-3 rounded border   focus:ring-2  ${
-                    errors.name
-                      ? 'border-red-500 focus:ring-offset-red-100'
-                      : 'border-secondary focus:ring-primary'
-                  }`}
-                  {...register('name', {
-                    required: 'Veuillez entrer votre nom',
-                    maxLength: 80,
-                  })}
+              <ul className="mt-10 space-y-3">
+                <li>
+                  <a
+                    href={`tel:${contactInfo.phone}`}
+                    className="flex items-center gap-4 rounded-2xl border border-line bg-white px-5 py-4 transition-colors hover:border-clay"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream">
+                      <Phone className="h-4 w-4 text-clay" />
+                    </span>
+                    <span className="text-sm text-inkSoft">
+                      {contactInfo.phone}
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="flex items-center gap-4 rounded-2xl border border-line bg-white px-5 py-4 transition-colors hover:border-clay"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream">
+                      <Mail className="h-4 w-4 text-clay" />
+                    </span>
+                    <span className="break-all text-sm text-inkSoft">
+                      {contactInfo.email}
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#message"
+                    className="flex items-center gap-4 rounded-2xl border border-line bg-white px-5 py-4 transition-colors hover:border-clay"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream">
+                      <MessageCircle className="h-4 w-4 text-clay" />
+                    </span>
+                    <span className="text-sm text-inkSoft">
+                      Écrire directement ici
+                    </span>
+                  </a>
+                </li>
+              </ul>
+
+              <div className="relative mt-12 hidden aspect-[4/3] w-full lg:block">
+                <Image
+                  src="/room.svg"
+                  alt=""
+                  fill
+                  className="object-contain object-left"
                 />
-                {errors.name?.message && (
-                  <small className="text-red-500">
-                    {String(errors.name.message)}
-                  </small>
-                )}
               </div>
+            </div>
 
-              <div className="mb-6">
-                <label
-                  htmlFor="phone"
-                  className="block mb-2 font-medium text-white"
-                >
-                  Téléphone
-                </label>
+            <div className="rounded-3xl border border-line bg-white p-7 lg:p-10">
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <input type="hidden" value="" {...register('botcheck')} />
                 <input
-                  type="tel"
-                  autoComplete="off"
-                  placeholder="Entrez votre numéro"
-                  className={`w-full p-3 rounded border  focus:ring-2  ${
-                    errors.name
-                      ? 'border-red-500 focus:ring-offset-red-100'
-                      : 'border-secondary focus:ring-primary'
-                  }`}
-                  {...register('phone', {
-                    required: 'Veuillez entrer votre numéro de téléphone',
-                    pattern: {
-                      value: /^\d{10}$/,
-                      message: 'Veuillez entrer un numéro valide',
-                    },
-                  })}
+                  type="hidden"
+                  value="Contact Form Submission"
+                  {...register('form_signature')}
                 />
-                {errors.name?.message && (
-                  <small className="text-red-500">
-                    {String(errors.name.message)}
-                  </small>
-                )}
-              </div>
 
-              <div className="mb-6">
-                <label
-                  htmlFor="email"
-                  className="block mb-2 font-medium text-white"
+                <div className="space-y-6">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block text-sm font-medium text-ink"
+                    >
+                      Nom
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      autoComplete="name"
+                      placeholder="Entrez votre nom complet"
+                      aria-invalid={errors.name ? 'true' : 'false'}
+                      className={`${fieldClass} ${
+                        errors.name ? 'border-red-500' : 'border-line'
+                      }`}
+                      {...register('name', {
+                        required: 'Veuillez entrer votre nom',
+                        maxLength: 80,
+                      })}
+                    />
+                    {errors.name?.message && (
+                      <p className="mt-2 text-sm text-red-600">
+                        {String(errors.name.message)}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="mb-2 block text-sm font-medium text-ink"
+                    >
+                      Téléphone
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder="Entrez votre numéro"
+                      aria-invalid={errors.phone ? 'true' : 'false'}
+                      className={`${fieldClass} ${
+                        errors.phone ? 'border-red-500' : 'border-line'
+                      }`}
+                      {...register('phone', {
+                        required: 'Veuillez entrer votre numéro de téléphone',
+                        pattern: {
+                          value: /^\d{10}$/,
+                          message: 'Veuillez entrer un numéro valide',
+                        },
+                      })}
+                    />
+                    {errors.phone?.message && (
+                      <p className="mt-2 text-sm text-red-600">
+                        {String(errors.phone.message)}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block text-sm font-medium text-ink"
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="Entrez votre email"
+                      aria-invalid={errors.email ? 'true' : 'false'}
+                      className={`${fieldClass} ${
+                        errors.email ? 'border-red-500' : 'border-line'
+                      }`}
+                      {...register('email', {
+                        required: 'Veuillez entrer votre email',
+                        pattern: {
+                          value: /^\S+@\S+$/i,
+                          message: 'Veuillez entrer un email valide',
+                        },
+                      })}
+                    />
+                    {errors.email?.message && (
+                      <p className="mt-2 text-sm text-red-600">
+                        {String(errors.email.message)}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="mb-2 block text-sm font-medium text-ink"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      autoComplete="off"
+                      rows={5}
+                      placeholder="Écrivez votre message ici"
+                      aria-invalid={errors.message ? 'true' : 'false'}
+                      className={`${fieldClass} resize-y ${
+                        errors.message ? 'border-red-500' : 'border-line'
+                      }`}
+                      {...register('message', {
+                        required: 'Veuillez entrer votre message',
+                      })}
+                    />
+                    {errors.message?.message && (
+                      <p className="mt-2 text-sm text-red-600">
+                        {String(errors.message.message)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="mt-8 w-full rounded-full bg-ink py-3.5 text-sm font-medium text-cream transition-colors hover:bg-clay disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  autoComplete="off"
-                  placeholder="Entrez votre email"
-                  className={`w-full p-3 rounded border   focus:ring-2  ${
-                    errors.name
-                      ? 'border-red-500 focus:ring-offset-red-100'
-                      : 'border-secondary focus:ring-primary'
-                  }`}
-                  {...register('email', {
-                    required: 'Veuillez entrer votre email',
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message: 'Veuillez entrer un email valide',
-                    },
-                  })}
-                />
-                {errors.name?.message && (
-                  <small className="text-red-500">
-                    {String(errors.name.message)}
-                  </small>
-                )}
-              </div>
-
-              <div className="mb-6">
-                <label
-                  htmlFor="message"
-                  className="block mb-2 font-medium text-white"
-                >
-                  Message
-                </label>
-                <textarea
-                  autoComplete="off"
-                  rows={4}
-                  placeholder="Écrivez votre message ici"
-                  className={`w-full p-3 rounded border   focus:ring-2  ${
-                    errors.name
-                      ? 'border-red-500 focus:ring-offset-red-100'
-                      : 'border-secondary focus:ring-primary'
-                  }`}
-                  {...register('message', {
-                    required: 'Veuillez entrer votre message',
-                  })}
-                ></textarea>
-                {errors.name?.message && (
-                  <small className="text-red-500">
-                    {String(errors.name.message)}
-                  </small>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3 px-6 bg-primary text-white font-bold rounded hover:bg-secondary hover:text-black focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                Envoyer
-              </button>
-            </form>
+                  {isSubmitting ? 'Envoi en cours…' : 'Envoyer le message'}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      <Footer />
-      <ToastContainer />
+      </section>
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }

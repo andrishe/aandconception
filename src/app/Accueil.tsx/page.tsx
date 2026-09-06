@@ -15,7 +15,7 @@ export default function Header() {
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70 z-0"></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <h1 className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold">
-          AAND CONCEPTION
+          LATALÉAAND
         </h1>
         <p className="text-white sm:text-base md:text-lg lg:text-xl font-medium mt-4">
           L&apos;art de transformer vos intérieurs en espaces d&apos;exception,

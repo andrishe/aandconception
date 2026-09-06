@@ -1,133 +1,123 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { AlignJustify, X, LogOut } from 'lucide-react';
+import { AlignJustify, LogOut, X } from 'lucide-react';
 import { NavbarLink } from '@/types/navbar';
 import { useUser } from '@/context/UserContext';
 
 interface NavbarProps {
+  links: NavbarLink[];
+  /** Props conservées pour compatibilité avec les pages existantes. */
   logoLight?: string;
   logoDark?: string;
-  links: NavbarLink[];
   textColorLight?: string;
   textColorDark?: string;
   dynamicLogo?: boolean;
 }
 
-export default function Navbar({
-  logoLight = '/logoBlanc.svg',
-  logoDark = '/logoBlack.svg',
-  links,
-  textColorLight = 'text-white',
-  textColorDark = 'text-black',
-  dynamicLogo = true,
-}: NavbarProps) {
+export default function Navbar({ links }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, logout } = useUser();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const logo = dynamicLogo ? (isScrolled ? logoDark : logoLight) : logoDark;
-  const textColor = dynamicLogo
-    ? isScrolled
-      ? textColorDark
-      : textColorLight
-    : textColorDark;
-
   return (
-    <nav
-      className={`fixed w-full top-0 left-0 z-10 h-16 transition-all duration-300 ${
+    <header
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-white border-b border-gray-200 shadow-sm'
-          : 'bg-transparent'
-      } `}
+          ? 'bg-cream/90 backdrop-blur-md border-b border-line'
+          : 'bg-cream border-b border-transparent'
+      }`}
     >
-      <div className="flex items-center justify-between px-6 py-4 max-w-screen-xl mx-auto h-full">
-        {/* Logo */}
-        <Image src={logo} alt="Logo" width={180} height={50} />
-
-        {/* Bouton pour le menu mobile */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-center w-10 h-10 md:hidden focus:outline-none"
+      <nav className="mx-auto flex h-20 max-w-screen-xl items-center justify-between px-5 lg:px-10">
+        <Link
+          href="/"
+          className="font-serif text-lg font-bold uppercase tracking-[0.14em] text-ink md:text-xl"
         >
-          {isOpen ? (
-            <X size={30} className={`text-black ${textColor}`} />
-          ) : (
-            <AlignJustify size={30} className={`text-black ${textColor}`} />
-          )}
-        </button>
+          Lataléaand
+        </Link>
 
-        {/* Liens de navigation */}
-        <ul className="hidden md:flex items-center gap-8 text-lg font-medium">
+        <ul className="hidden items-center gap-8 lg:flex">
           {links.map((link) => (
-            <li key={link.href} className={textColor}>
+            <li key={link.href}>
               <Link
                 href={link.href}
                 className={
                   link.label === 'Signin'
-                    ? 'px-4 py-2 rounded-full bg-[#a8797f] text-white font-semibold shadow-md hover:bg-[#926368] transition-all'
-                    : 'hover:text-primary flex items-center gap-2'
+                    ? 'rounded-full bg-ink px-5 py-2 text-sm font-medium text-cream transition-colors hover:bg-clay'
+                    : 'text-sm text-inkSoft transition-colors hover:text-clay'
                 }
               >
                 {link.label === 'Signin' ? 'Connexion' : link.label}
               </Link>
             </li>
           ))}
-
-          {/* Bouton de déconnexion (s'affiche uniquement si l'utilisateur est connecté) */}
-          {user && (
-            <li>
-              <span
-                onClick={logout}
-                className="flex items-center gap-2 px-4 py-2 rounded-full  text-black  hover:text-[#926368] transition-all"
-              >
-                <LogOut size={16} />
-              </span>
-            </li>
-          )}
         </ul>
-      </div>
 
-      {/* Menu mobile */}
-      {isOpen && (
-        <div className="md:hidden fixed top-0 left-0 w-full h-80 bg-secondary z-20 flex flex-col items-center space-y-6 pb-4">
+        {user && (
           <button
-            onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 focus:outline-none"
+            type="button"
+            onClick={logout}
+            aria-label="Se déconnecter"
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-line text-inkSoft transition-colors hover:border-clay hover:text-clay lg:flex"
           >
-            <X size={30} className="text-black" />
+            <LogOut size={16} />
           </button>
-          <ul className="text-xl font-medium flex flex-col items-center space-y-4">
+        )}
+
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Ouvrir le menu"
+          aria-expanded={isOpen}
+          className="flex h-10 w-10 items-center justify-center text-ink lg:hidden"
+        >
+          {isOpen ? <X size={26} /> : <AlignJustify size={26} />}
+        </button>
+      </nav>
+
+      {isOpen && (
+        <div className="border-t border-line bg-cream px-5 pb-8 pt-4 lg:hidden">
+          <ul className="flex flex-col gap-1">
             {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`${
-                    link.label === 'Signin'
-                      ? 'w-full px-4 py-2 mt-4 rounded-full bg-[#a8797f] text-white font-semibold shadow-md hover:bg-[#926368] transition-all text-center'
-                      : 'hover:text-primary text-black flex items-center gap-2'
-                  }`}
                   onClick={() => setIsOpen(false)}
+                  className={
+                    link.label === 'Signin'
+                      ? 'mt-4 block rounded-full bg-ink py-3 text-center text-base font-medium text-cream'
+                      : 'block border-b border-line/70 py-3 text-base text-inkSoft transition-colors hover:text-clay'
+                  }
                 >
                   {link.label === 'Signin' ? 'Connexion' : link.label}
                 </Link>
               </li>
             ))}
           </ul>
+
+          {user && (
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full border border-line py-3 text-sm text-inkSoft"
+            >
+              <LogOut size={16} />
+              Se déconnecter
+            </button>
+          )}
         </div>
       )}
-    </nav>
+    </header>
   );
 }
